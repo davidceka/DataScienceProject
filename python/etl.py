@@ -38,12 +38,16 @@ stati_orig = spark.read.option("header", True).csv(
     "/home/david/Documents/data_science/python/dataset/sorgenti/stati_orig.csv"
 )
 
-prova1 = log_ritardi.join(aeroporti_orig, aeroporti_orig.IATAOrig == log_ritardi.Origin)
+prova1 = log_ritardi.join(
+    aeroporti_orig, aeroporti_orig.IATAOrig == log_ritardi.Origin)
 prova1 = prova1.join(aeroporti_dest, aeroporti_dest.IATADest == prova1.Dest)
 prova1 = prova1.join(aerei, aerei.TailNumA == prova1.TailNum)
-prova1 = prova1.join(compagnie, compagnie.UniqueCarrierA == prova1.UniqueCarrier)
-prova1 = prova1.join(stati_dest, stati_dest.StateCodeDestA == prova1.StateCodeDest)
-prova1 = prova1.join(stati_orig, stati_orig.StateCodeOrigA == prova1.StateCodeOrig)
+prova1 = prova1.join(compagnie, compagnie.UniqueCarrierA ==
+                     prova1.UniqueCarrier)
+prova1 = prova1.join(
+    stati_dest, stati_dest.StateCodeDestA == prova1.StateCodeDest)
+prova1 = prova1.join(
+    stati_orig, stati_orig.StateCodeOrigA == prova1.StateCodeOrig)
 
 ripulito1 = prova1.select(
     "dayofweek",
@@ -82,4 +86,5 @@ ripulito1 = prova1.select(
     "regiondest",
     "statenameorig",
     "regionorig",
+    "arrdelay",
 )
